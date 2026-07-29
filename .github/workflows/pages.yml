@@ -14,9 +14,8 @@ jobs:
     runs-on: ubuntu-latest
 
     environment:
-      name: production
-      url: https://gridfinity-extended.ostat.com/
-      deployment: ${{ github.ref == 'refs/heads/main' }}
+      name: ${{ github.ref == 'refs/heads/main' && 'live' || 'preview' }}
+      url: ${{ github.ref == 'refs/heads/main' && 'https://gridfinity-extended.ostat.com/' || steps.cf_publish.outputs.deployment-url }}
 
     permissions:
       contents: read
